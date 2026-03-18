@@ -1,4 +1,4 @@
-Built a CUDA-accelerated path tracer from scratch in C++, simulating global illumination with Monte Carlo ray tracing (5,000 samples/pixel, multi-bounce lighting). 
-Achieved ~1773x speedup over CPU implementation by parallelizing per-pixel rendering using GPU kernels. 
-Implemented ray–sphere intersection and recursive light transport for realistic rendering. 
-Added gamma correction to improve visual fidelity.
+- Built a CUDA-accelerated path tracer from scratch in C++, simulating global illumination with Monte Carlo ray tracing (5,000 samples/pixel, multi-bounce lighting). 
+- Achieved ~1773x speedup over CPU implementation by parallelizing per-pixel rendering using GPU kernels. 
+- Implemented ray–sphere intersection and recursive light transport for realistic rendering. 
+- Added gamma correction to improve visual fidelity.
