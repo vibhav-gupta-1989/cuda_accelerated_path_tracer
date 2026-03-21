@@ -385,12 +385,6 @@ int main(){
     Vec3* fb;
     cudaMallocManaged(&fb, WIDTH*HEIGHT*sizeof(Vec3));
 
-    curandState* d_rand;
-    cudaMalloc(&d_rand, WIDTH*HEIGHT*sizeof(curandState));
-
-    init_rand<<<(WIDTH*HEIGHT+255)/256,256>>>(d_rand);
-    cudaDeviceSynchronize();
-
     // Scene
     const int N = 50;
     Sphere* spheres;
@@ -460,8 +454,6 @@ int main(){
         }
     }
 
-    cudaDeviceSynchronize();
-
     Vec3* fb_cpu = new Vec3[WIDTH*HEIGHT];
 
     // ---------------- CPU TIMING ----------------
@@ -476,8 +468,14 @@ int main(){
 
 
     // ---------------- GPU TIMING ----------------
-    cudaDeviceSynchronize();
+
     auto gpu_start = std::chrono::high_resolution_clock::now();
+
+    curandState* d_rand;
+    cudaMalloc(&d_rand, WIDTH*HEIGHT*sizeof(curandState));
+
+    init_rand<<<(WIDTH*HEIGHT+255)/256,256>>>(d_rand);
+    cudaDeviceSynchronize();
 
     dim3 blocks((WIDTH+15)/16,(HEIGHT+15)/16);
     dim3 threads(16,16);
