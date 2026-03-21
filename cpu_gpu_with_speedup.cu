@@ -401,6 +401,8 @@ int main(){
     // Random small spheres
     int idx = 4;
 
+    bool overlap;
+
     for(int a = -5; a < 5; a++){
         for(int b = -5; b < 5; b++){
 
@@ -414,9 +416,21 @@ int main(){
                 b + 0.9f*randf()
             );
 
-            // Avoid overlap with main sphere
-            if(dot(center - Vec3(0,2,0), center - Vec3(0,2,0)) < 4.0f)
-                continue;
+            overlap = false;
+
+            for(int i=0; i<idx; i++){
+                float x, y, z;
+                x = center.x - spheres[i].center.x;
+                y = center.y - spheres[i].center.y;
+                z = center.z - spheres[i].center.z;
+
+                if(x*x + y*y + z*z < (spheres[i].radius + 0.2) * (spheres[i].radius + 0.2)){
+                    overlap = true;
+                    break;
+                }
+            }
+
+            if(overlap) continue;
 
             if(choose_mat < 0.6f){
                 // Diffuse
